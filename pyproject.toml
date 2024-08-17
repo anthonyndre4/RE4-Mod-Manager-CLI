@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "re4-mod-searcher"
+version = "0.1.0"
+description = ""
+authors = ["Anthony Residentevil <akuauk1@gmail.com>"]
+readme = "README.md"
+packages = [{include = 'app'}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+click = "^8.1.7"
+pydantic = "^2.8.2"
+requests = "^2.32.3"
+pydantic-settings = "^2.4.0"
+types-requests = "^2.32.0.20240712"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.1.1"
+responses = "^0.25.3"
+bandit = "^1.7.9"
+black = "^24.8.0"
+mypy = "^1.11.1"
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+exclude = ["tests", "venv", ".venv", "__pycache__"]
+max-line-length = 88
+
+[tool.bandit]
+exclude_dirs = [".venv", "venv", "tests"]
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+exclude = ['tests', 'venv', '.venv']
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+    "integration",
+]
