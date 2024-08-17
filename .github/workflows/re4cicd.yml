@@ -1,4 +1,4 @@
-name: RE4ModCheckerCI/CD
+name: RE4ModChecker CI/CD
 
 "on":
   push:

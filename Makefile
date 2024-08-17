@@ -7,3 +7,6 @@ unit-tests:
 
 format:
 	poetry run black .
+
+check-poetry:
+	poetry run python ./pre-commit-scripts/check-poetry.py

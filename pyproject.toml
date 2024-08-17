@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "re4-mod-searcher"
+name = "RE4-Mod-Manager-CLI"
 version = "0.1.0"
 description = ""
 authors = ["Anthony Residentevil <akuauk1@gmail.com>"]
