@@ -41,13 +41,13 @@ class BaseNexusClient(BaseSettings):
         if kwargs.get("data"):
             request = requests.request(
                 request_type,
-                f"{self.base_url}{url}",
+                f"{self.base_url}{url}.json",
                 data=data,
                 headers=self.headers,
             )
         else:
             request = requests.request(
-                request_type, f"{self.base_url}{url}", headers=self.headers
+                request_type, f"{self.base_url}{url}.json", headers=self.headers
             )
         if not request.ok:
             raise NexusAuthException(request)
