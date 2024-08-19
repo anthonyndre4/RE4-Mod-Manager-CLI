@@ -21,7 +21,7 @@ class BaseNexusClient(BaseSettings):
     def base_url(self) -> str:
         return "https://api.nexusmods.com"
 
-    def do(self, **kwargs) -> Any:
+    def base_request(self, **kwargs) -> Any:
         """This is the base request function for the 'BaseNexusClient' class.
         It takes the following parameters.
         1. Request Type (request_type) - get, delete, post etc
@@ -67,19 +67,19 @@ class BaseNexusClient(BaseSettings):
         Returns:
             The given pydantic model.
         """
-        return self.do(request_type="get", model=model, url=url)
+        return self.base_request(request_type="get", model=model, url=url)
 
     def delete(self, url: str) -> Any:
-        """This function is a standard HTTP 'DELETE' Request utilising the 'do' method.
+        """This function is a standard HTTP 'DELETE' Request utilising the 'base_request' method.
         Parameters:
         1. URL (url) - What url will be amended onto the base url.
         Returns:
             The status code returned from the request.
         """
-        return self.do(request_type="delete", url=url)
+        return self.base_request(request_type="delete", url=url)
 
     def post(self, url: str, model: Any, data: Any | None = None) -> Any:
-        """This function is a standard HTTP 'POST' Request utilising the 'do' method.
+        """This function is a standard HTTP 'POST' Request utilising the 'base_request' method.
         Parameters:
         1. URL (url) - What url will be amended onto the base url.
         2. Model (model) - (Optional) What pydantic model it will be converting the response into.
@@ -87,10 +87,10 @@ class BaseNexusClient(BaseSettings):
         Returns:
             The given pydantic model.
         """
-        return self.do(request_type="post", model=model, url=url, data=data)
+        return self.base_request(request_type="post", model=model, url=url, data=data)
 
     def patch(self, url: str, model: Any, data: Any) -> Any:
-        """This function is a standard HTTP 'PATCH' Request utilising the 'do' method.
+        """This function is a standard HTTP 'PATCH' Request utilising the 'base_request' method.
         Parameters:
         1. URL (url) - What url will be amended onto the base url.
         2. Model (model) - (Optional) What pydantic model it will be converting the response into.
@@ -98,7 +98,7 @@ class BaseNexusClient(BaseSettings):
         Returns:
             The given pydantic model.
         """
-        return self.do(request_type="patch", model=model, url=url, data=data)
+        return self.base_request(request_type="patch", model=model, url=url, data=data)
 
     def list(self, url: str, model: Any) -> Any:
         """This function is a standard HTTP 'PATCH' Request utilising the 'do' method.
@@ -108,4 +108,4 @@ class BaseNexusClient(BaseSettings):
         Returns:
             A list of the given pydantic model.
         """
-        return self.do(request_type="get", model=model, url=url, is_list=True)
+        return self.base_request(request_type="get", model=model, url=url, is_list=True)

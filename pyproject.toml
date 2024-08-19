@@ -13,6 +13,8 @@ pydantic = "^2.8.2"
 requests = "^2.32.3"
 pydantic-settings = "^2.4.0"
 types-requests = "^2.32.0.20240712"
+toml = "^0.10.2"
+types-toml = "^0.10.8.20240310"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.1.1"
@@ -38,7 +40,7 @@ exclude_dirs = [".venv", "venv", "tests"]
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
-exclude = ['tests', 'venv', '.venv']
+exclude = ['tests', 'venv', '.venv','pre-commit-scripts']
 
 [tool.pytest.ini_options]
 testpaths = [
