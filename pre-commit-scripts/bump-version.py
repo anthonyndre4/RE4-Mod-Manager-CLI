@@ -76,6 +76,7 @@ class BumpVersion(BaseSettings):
             self.toml_file.tool.poetry.version = self._turn_version_split_to_string(
                 self._determine_version(patch=True)
             )
+        self._update_new_version(self.toml_file.tool.poetry.version)
         return f"v{self.toml_file.tool.poetry.version}"
 
     def _turn_version_split_to_string(self, new_version: list[int]) -> str:

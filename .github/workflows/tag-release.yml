@@ -21,6 +21,7 @@ jobs:
         run: |
             ver=$(make bump-version)
             poetryVersion=$(poetry version --short)
+            echo $poetryVersion
             if [ "Not a release version, nothing to do..." == *$ver* ]; then
                 echo "Not a release version, nothing to do..."
             else
