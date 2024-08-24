@@ -227,3 +227,153 @@ def get_game_latest_mods_response_obj(id):
         ]
 
     return inner
+
+
+@pytest.fixture
+def get_game_latest_mods_added_response(id):
+    def inner(mod_name, mod_name_2, name):
+        return [
+            {
+                "name": mod_name,
+                "summary": "1111111",
+                "description": "11111111",
+                "picture_url": "https://staticdelivery.nexusmods.com/mods/5195/images/3174/3174-1724479256-300206272.jpeg",
+                "mod_downloads": 0,
+                "mod_unique_downloads": 0,
+                "uid": 22312355105894,
+                "mod_id": id,
+                "game_id": 5195,
+                "allow_rating": True,
+                "domain_name": name,
+                "category_id": 9,
+                "version": "V1.0",
+                "endorsement_count": 8,
+                "created_timestamp": 1724479459,
+                "created_time": "2024-08-24T06:04:19.000+00:00",
+                "updated_timestamp": 1724479459,
+                "updated_time": "2024-08-24T06:04:19.000+00:00",
+                "author": "Boy Next Door",
+                "uploaded_by": "boynextdoor000",
+                "uploaded_users_profile_url": "https://www.nexusmods.com/users/118456563",
+                "contains_adult_content": False,
+                "status": "published",
+                "available": True,
+                "user": {
+                    "member_id": 118456563,
+                    "member_group_id": 27,
+                    "name": "boynextdoor000",
+                },
+                "endorsement": None,
+            },
+            {
+                "name": mod_name_2,
+                "summary": "Gray recolor for Leon's Pinstripe outfit",
+                "description": "[size=3][center]Install with [b]Fluffy Manager 5000[/b][/center]\n<br />[/size][size=3]\n<br />Credits:\n<br />\n<br />[url=https://github.com/alphazolam/fmt_RE_MESH-Noesis-Plugin]fmt_RE_MESH-Noesis-Plugin[/url] by alphaZomega\n<br />\n<br />[url=https://github.com/NSACloud/RE-Mesh-Editor]RE Mesh Editor[/url] by NSA Cloud\n<br />\n<br />[url=https://www.fluffyquack.com/]Fluffy Manager 5000[/url] by FluffyQuack\n<br />\n<br />\n<br />[/size][size=3][center]﻿If the mod doesn't work, make sure you've [b]uninstalled all mods[/b] and [b]re-read game archives[/b].[/center][/size]",
+                "picture_url": "https://staticdelivery.nexusmods.com/mods/5195/images/3173/3173-1724474436-1861936752.png",
+                "mod_downloads": 0,
+                "mod_unique_downloads": 0,
+                "uid": 22312355105893,
+                "mod_id": 3173,
+                "game_id": 5195,
+                "allow_rating": True,
+                "domain_name": name,
+                "category_id": 9,
+                "version": "1.0",
+                "endorsement_count": 0,
+                "created_timestamp": 1724474672,
+                "created_time": "2024-08-24T04:44:32.000+00:00",
+                "updated_timestamp": 1724474672,
+                "updated_time": "2024-08-24T04:44:32.000+00:00",
+                "author": "linkthehylian",
+                "uploaded_by": "linkthehyliann",
+                "uploaded_users_profile_url": "https://www.nexusmods.com/users/52359266",
+                "contains_adult_content": False,
+                "status": "published",
+                "available": True,
+                "user": {
+                    "member_id": 52359266,
+                    "member_group_id": 27,
+                    "name": "linkthehyliann",
+                },
+                "endorsement": None,
+            },
+        ]
+
+    return inner
+
+
+@pytest.fixture
+def get_game_latest_mods_added_response_obj(id):
+    def inner(mod_name, mod_name_2, name):
+        return [
+            LatestMods.model_validate(
+                {
+                    "name": mod_name,
+                    "summary": "1111111",
+                    "description": "11111111",
+                    "picture_url": "https://staticdelivery.nexusmods.com/mods/5195/images/3174/3174-1724479256-300206272.jpeg",
+                    "mod_downloads": 0,
+                    "mod_unique_downloads": 0,
+                    "uid": 22312355105894,
+                    "mod_id": id,
+                    "game_id": 5195,
+                    "allow_rating": True,
+                    "domain_name": name,
+                    "category_id": 9,
+                    "version": "V1.0",
+                    "endorsement_count": 8,
+                    "created_timestamp": 1724479459,
+                    "created_time": "2024-08-24T06:04:19.000+00:00",
+                    "updated_timestamp": 1724479459,
+                    "updated_time": "2024-08-24T06:04:19.000+00:00",
+                    "author": "Boy Next Door",
+                    "uploaded_by": "boynextdoor000",
+                    "uploaded_users_profile_url": "https://www.nexusmods.com/users/118456563",
+                    "contains_adult_content": False,
+                    "status": "published",
+                    "available": True,
+                    "user": {
+                        "member_id": 118456563,
+                        "member_group_id": 27,
+                        "name": "boynextdoor000",
+                    },
+                    "endorsement": None,
+                }
+            ),
+            LatestMods.model_validate(
+                {
+                    "name": mod_name_2,
+                    "summary": "Gray recolor for Leon's Pinstripe outfit",
+                    "description": "[size=3][center]Install with [b]Fluffy Manager 5000[/b][/center]\n<br />[/size][size=3]\n<br />Credits:\n<br />\n<br />[url=https://github.com/alphazolam/fmt_RE_MESH-Noesis-Plugin]fmt_RE_MESH-Noesis-Plugin[/url] by alphaZomega\n<br />\n<br />[url=https://github.com/NSACloud/RE-Mesh-Editor]RE Mesh Editor[/url] by NSA Cloud\n<br />\n<br />[url=https://www.fluffyquack.com/]Fluffy Manager 5000[/url] by FluffyQuack\n<br />\n<br />\n<br />[/size][size=3][center]﻿If the mod doesn't work, make sure you've [b]uninstalled all mods[/b] and [b]re-read game archives[/b].[/center][/size]",
+                    "picture_url": "https://staticdelivery.nexusmods.com/mods/5195/images/3173/3173-1724474436-1861936752.png",
+                    "mod_downloads": 0,
+                    "mod_unique_downloads": 0,
+                    "uid": 22312355105893,
+                    "mod_id": 3173,
+                    "game_id": 5195,
+                    "allow_rating": True,
+                    "domain_name": name,
+                    "category_id": 9,
+                    "version": "1.0",
+                    "endorsement_count": 0,
+                    "created_timestamp": 1724474672,
+                    "created_time": "2024-08-24T04:44:32.000+00:00",
+                    "updated_timestamp": 1724474672,
+                    "updated_time": "2024-08-24T04:44:32.000+00:00",
+                    "author": "linkthehylian",
+                    "uploaded_by": "linkthehyliann",
+                    "uploaded_users_profile_url": "https://www.nexusmods.com/users/52359266",
+                    "contains_adult_content": False,
+                    "status": "published",
+                    "available": True,
+                    "user": {
+                        "member_id": 52359266,
+                        "member_group_id": 27,
+                        "name": "linkthehyliann",
+                    },
+                    "endorsement": None,
+                }
+            ),
+        ]
+
+    return inner
