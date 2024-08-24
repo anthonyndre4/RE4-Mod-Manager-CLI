@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "RE4-Mod-Manager-CLI"
-version = "0.2.2"
+version = "0.3.0"
 description = ""
 authors = ["Anthony Residentevil <akuauk1@gmail.com>"]
 readme = "README.md"
