@@ -1,6 +1,6 @@
 # RE4 Mod CLI Manager
 
-The **RE4 Mod CLI Manager** is a command-line interface (CLI) tool designed to help you manage Resident Evil 4 mods from NexusMods efficiently. Whether you're a modding veteran or new to the scene, this tool simplifies the process of searching, downloading, and managing mods directly from the terminal. 
+The **RE4 Mod CLI Manager** is a command-line interface (CLI) tool designed to help you manage Resident Evil 4 mods from NexusMods efficiently. Whether you're a modding veteran or new to the scene, this tool simplifies the process of searching, downloading, and managing mods directly from the terminal.
 
 ## Features
 
