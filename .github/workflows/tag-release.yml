@@ -25,6 +25,7 @@ jobs:
             if [ $oldVer == $poetryVersion ]; then
                 echo "Not a release version, nothing to do..."
             else
+                echo ${{ github.event.head_commit.message }}
                 git add pyproject.toml
                 newVersion="v$poetryVersion"
                 git commit -m "Bumping Release Version to $newVersion"
