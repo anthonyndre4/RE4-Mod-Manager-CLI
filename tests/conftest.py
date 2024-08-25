@@ -1,7 +1,10 @@
 import pytest
+from requests import Response
 
+from app.exceptions.auth import NexusAuthException
 from app.models.nexus import Game, LatestMods
 from app.services.nexus import NexusClient
+from click.testing import CliRunner
 
 
 @pytest.fixture
@@ -33,9 +36,9 @@ def get_game_response(id):
             "domain_name": f"{name}42023",
             "approved_date": 1678540494,
             "file_views": 0,
-            "authors": 575,
+            "authors": 500,
             "file_endorsements": 481551,
-            "mods": 2603,
+            "mods": 2000,
             "categories": [
                 {
                     "category_id": 1,
@@ -63,9 +66,9 @@ def get_game_response_obj(id):
                 "domain_name": f"{name}42023",
                 "approved_date": 1678540494,
                 "file_views": 0,
-                "authors": 575,
+                "authors": 500,
                 "file_endorsements": 481551,
-                "mods": 2603,
+                "mods": 2000,
                 "categories": [
                     {
                         "category_id": 1,
@@ -375,5 +378,21 @@ def get_game_latest_mods_added_response_obj(id):
                 }
             ),
         ]
+
+    return inner
+
+
+@pytest.fixture
+def cli_runner():
+    return CliRunner()
+
+
+@pytest.fixture
+def response_mock():
+    def inner(status_code: int = 404, reason: str = "Not Found") -> Response:
+        response = Response()
+        response.status_code = status_code
+        response.reason = reason
+        return response
 
     return inner
