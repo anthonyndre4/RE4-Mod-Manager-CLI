@@ -65,6 +65,9 @@ jobs:
         python-version: ["3.11"]
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          git fetch
+          git rebase origin/main
       - uses: ./.github/actions/setup
         with:
           os: ${{ matrix.os }}
@@ -72,7 +75,6 @@ jobs:
       - name: Build package
         run: |
             make package
-
       - name: Configure AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -86,5 +88,12 @@ jobs:
           echo "CODEARTIFACT_AUTH_TOKEN=${TOKEN}" >> $GITHUB_ENV
       - name: Publish package to CodeArtifact Repository
         run: |
-          OUTPUT=$(poetry run twine upload --repository-url https://my-domain-123456789012.d.codeartifact.us-east-1.amazonaws.com/pypi/my-repository/simple/ -u aws -p ${{ env.CODEARTIFACT_AUTH_TOKEN }} dist/*)
-          echo "::add-mask::$OUTPUT"
+              currVersion=$(aws codeartifact list-package-versions --domain code-artifact-domain --domain-owner 682033465466 --repository cli-repository --format pypi --package re4cli --output json --sort-by PUBLISHED_TIME)
+              lastVersion=$(echo "$currVersion" | jq -r '.versions[0].version')
+              poetryVer=$(poetry version --short)
+              if [ $lastVersion == $poetryVer ]; then
+                echo "Same package version, publish not required..."
+              else
+                poetry run twine upload --repository-url https://code-artifact-domain-682033465466.d.codeartifact.eu-west-2.amazonaws.com/pypi/cli-repository/ -u aws -p ${{ env.CODEARTIFACT_AUTH_TOKEN }} dist/* > /dev/null 2>&1
+                echo "Upload successful new version $poetryVer, previous version $lastVersion..."
+              fi

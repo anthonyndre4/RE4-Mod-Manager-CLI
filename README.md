@@ -12,7 +12,15 @@ The **RE4 Mod CLI Manager** is a command-line interface (CLI) tool designed to h
 
 ## Installation
 
-TBC
+**PIP Installation**
+```bash
+pip install re4cli
+```
+
+**Poetry Installation**
+```bash
+poetry add re4cli
+```
 
 ## Future Plans
 While this tool currently focuses on managing mods for Resident Evil 4, future updates will expand its functionality to support mod management for any game available on NexusMods. This will make it a versatile tool for gamers across multiple titles.
