@@ -1,9 +1,11 @@
+VERBOSE=-vv
+
 linting:
 	poetry run mypy .
 	poetry run black .
 
 unit-tests:
-	poetry run pytest .
+	poetry run pytest . ${VERBOSE}
 
 format:
 	poetry run black .

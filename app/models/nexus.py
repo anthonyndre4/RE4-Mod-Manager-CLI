@@ -5,7 +5,7 @@ from pydantic import BaseModel
 class Category(BaseModel):
     category_id: int
     name: str
-    parent_category: bool
+    parent_category: bool | int
 
 
 class User(BaseModel):
