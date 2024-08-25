@@ -16,6 +16,10 @@ def config(ctx: click.Context, config: CLIConfig) -> Group:  # type: ignore
 
 @config.command()
 @click.pass_context
+@click.option(
+    "--path",
+    required=False,
+)
 def create_config(ctx: click.Context):
     config = CLIConfig()
     loaded_config = config.load_config()
