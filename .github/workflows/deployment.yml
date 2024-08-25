@@ -1,0 +1,89 @@
+---
+name: CLI-Deployment
+'on':
+  push:
+    branches: ['main']
+jobs:
+  tag-release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
+      - name: Run tag-release
+        run: |
+            oldVer=$(poetry version --short)
+            ver=$(make bump-version)
+            poetryVersion=$(poetry version --short)
+            if [ $oldVer == $poetryVersion ]; then
+                echo "Not a release version, nothing to do..."
+            else
+                git add pyproject.toml
+                newVersion="v$poetryVersion"
+                git commit -m "Bumping Release Version to $newVersion"
+                git tag -a $newVersion -m "Version $newVersion"
+                git push
+                git push origin $newVersion
+            fi
+        env:
+          commit_msg: ${{ github.event.head_commit.message }}
+          github_token: ${{ secrets.GH_TOKEN }}
+  deploy-terraform:
+    needs: tag-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+      - name: Terraform Init
+        run: terraform -chdir=tf init
+      - name: Terraform Plan
+        run: terraform -chdir=tf plan
+      - name: Terraform Apply
+        run: terraform -chdir=tf apply -auto-approve
+  build-and-publish:
+    needs: ['tag-release', 'deploy-terraform']
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
+      - name: Build package
+        run: |
+            make package
+
+      - name: Configure AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+      - name: Retrieve Artifact Token
+        id: get-codeartifact-token
+        run: |
+          TOKEN=$(aws codeartifact get-authorization-token --domain my-domain --query authorizationToken --output text --region eu-west-2)
+          echo "CODEARTIFACT_AUTH_TOKEN=${TOKEN}" >> $GITHUB_ENV
+      - name: Publish package to CodeArtifact Repository
+        run: |
+            twine upload --repository-url https://my-domain-123456789012.d.codeartifact.us-east-1.amazonaws.com/pypi/my-repository/simple/ -u aws -p ${{ env.CODEARTIFACT_AUTH_TOKEN }} dist/*

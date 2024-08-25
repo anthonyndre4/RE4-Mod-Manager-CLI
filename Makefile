@@ -20,4 +20,4 @@ bump-version-sh:
 	poetry run ./pre-commit-scripts/bump-version.sh
 
 package:
-	poetry run python .\setup.py build
+	poetry run python .\setup.py sdist bdist_wheel
