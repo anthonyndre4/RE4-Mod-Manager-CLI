@@ -9,6 +9,11 @@ resource "aws_codeartifact_domain" "artifact-domain" {
 resource "aws_codeartifact_repository" "cli-repository" {
   repository = "cli-repository"
   domain     = aws_codeartifact_domain.artifact-domain.domain
+
+  tags = {
+    "use-case" = "re4cli"
+  }
+
 }
 
 resource "aws_iam_policy" "codeartifact_policy_iam" {
@@ -29,7 +34,7 @@ resource "aws_iam_policy" "codeartifact_policy_iam" {
           "codeartifact:List*",
           "codeartifact:*"
         ],
-        "Resource" : "*"
+        "Resource" : aws_codeartifact_repository.cli-repository.arn
       }
     ]
   })
