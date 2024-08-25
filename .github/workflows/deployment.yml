@@ -82,8 +82,9 @@ jobs:
       - name: Retrieve Artifact Token
         id: get-codeartifact-token
         run: |
-          TOKEN=$(aws codeartifact get-authorization-token --domain my-domain --query authorizationToken --output text --region eu-west-2)
+          TOKEN=$(aws codeartifact get-authorization-token --domain code-artifact-domain --query authorizationToken --output text --region eu-west-2)
           echo "CODEARTIFACT_AUTH_TOKEN=${TOKEN}" >> $GITHUB_ENV
       - name: Publish package to CodeArtifact Repository
         run: |
-            twine upload --repository-url https://my-domain-123456789012.d.codeartifact.us-east-1.amazonaws.com/pypi/my-repository/simple/ -u aws -p ${{ env.CODEARTIFACT_AUTH_TOKEN }} dist/*
+          OUTPUT=$(poetry run twine upload --repository-url https://my-domain-123456789012.d.codeartifact.us-east-1.amazonaws.com/pypi/my-repository/simple/ -u aws -p ${{ env.CODEARTIFACT_AUTH_TOKEN }} dist/*)
+          echo "::add-mask::$OUTPUT"

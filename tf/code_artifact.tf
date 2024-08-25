@@ -32,7 +32,7 @@ resource "aws_iam_policy" "codeartifact_policy_iam" {
           "codeartifact:CreateRepository",
           "codeartifact:Describe*",
           "codeartifact:List*",
-          "codeartifact:*"
+          "codeartifact:GetServiceBearerToken"
         ],
         "Resource" : aws_codeartifact_repository.cli-repository.arn
       }
